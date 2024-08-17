@@ -26,7 +26,7 @@ const http=require('http')
 const path=require('path')
 const dotEnv=require('dotenv');
 var bodyParser = require('body-parser')
-var jwt = require('jsonwebtoken');
+
 
 
 dotEnv.config();

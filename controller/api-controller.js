@@ -1,4 +1,5 @@
 const userModel = require('../module/user-model');
+var jwt = require('jsonwebtoken');
 class ApiController{
     // getUser = (req,res) => {
         
@@ -23,7 +24,54 @@ class ApiController{
     //         message : "hello"
     //     })
     // }
+    login=async(req,res)=>{
+        try {
+            console.log(req.body)
+            let userData = await userModel.findOne({ email: req.body.email });
+            console.log(userData)
+            if (userData) {
+                let User = new userModel();
+                let checkPassword = User.compareHash(req.body.password, userData.password);
+                console.log(checkPassword)
 
+                if (checkPassword == true) {
+                    let payload = {
+                        id: userData._id,
+                        email: userData.email,
+                    }
+
+                    let expTime = '12h';
+
+                    var token = jwt.sign(payload, process.env.JWT_SECRET,{expiresIn:expTime});
+                    res.status(200).send({
+                        data:userData,
+                        message:"login successful",
+                        token:token,
+                        status:200
+
+                    });
+                }else{
+                    res.status(200).send({
+                        data:{},
+                        status:"email or password is wrong"
+                    });
+                }
+            }else{
+                res.status(200).send({
+                    data:{},
+                        status:"User not found"
+                });
+            }            
+        } catch (err) {
+            console.log(err)
+            res.send({
+                data:err,
+                status :"Error"
+            })
+            
+            
+        }
+    }
 
 
     getUser = async (req, res) => {
@@ -42,6 +90,7 @@ class ApiController{
             })
         }
     }
+    
     addUser = async (req, res) => {
         try {
             // console.log(req.body,'req.body')

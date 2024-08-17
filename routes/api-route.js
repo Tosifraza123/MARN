@@ -19,6 +19,7 @@ router.post('/user/add', ApiControler.addUser);
 router.get('/user/info/:id', ApiControler.getSingleData);
 router.post('/user/update', ApiControler.updateUser);
 router.get('/user/delete/:id', ApiControler.deleteUser);
+router.post('/login', ApiControler.login);
 
 // router.get('/user/update',ApiControler.updateUser);
 module.exports = {
