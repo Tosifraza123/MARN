@@ -21,6 +21,8 @@ router.post('/user/update', ApiControler.updateUser);
 router.get('/user/delete/:id', ApiControler.deleteUser);
 router.post('/login', ApiControler.login);
 
+router.post('/signup', ApiControler.signUp);
+
 // router.get('/user/update',ApiControler.updateUser);
 module.exports = {
     route : router
